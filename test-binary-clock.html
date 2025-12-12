@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Clock Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .time-display {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .binary-row {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .label {
+            width: 80px;
+            font-weight: bold;
+        }
+        .binary-bits {
+            display: flex;
+            gap: 5px;
+            margin: 0 20px;
+        }
+        .bit {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #555;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .bit.on {
+            background: #00ff00;
+            color: #000;
+            border-color: #00ff00;
+        }
+        .bit.off {
+            background: #333;
+            color: #666;
+            border-color: #555;
+        }
+        .decimal {
+            font-size: 18px;
+            margin-left: 20px;
+        }
+        .status {
+            background: #2a4a2a;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #4a2a2a;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🕐 Binary Clock Test</h1>
+        <p>This test verifies that the binary clock component is working correctly.</p>
+        
+        <div class="status" id="status">
+            Status: Initializing...
+        </div>
+        
+        <div class="time-display">
+            <h3>Current Time</h3>
+            <div id="current-time"></div>
+            
+            <h3>Binary Representation</h3>
+            <div class="binary-row">
+                <span class="label">Hours:</span>
+                <div class="binary-bits" id="hours-bits"></div>
+                <span class="decimal" id="hours-decimal"></span>
+            </div>
+            <div class="binary-row">
+                <span class="label">Minutes:</span>
+                <div class="binary-bits" id="minutes-bits"></div>
+                <span class="decimal" id="minutes-decimal"></span>
+            </div>
+            <div class="binary-row">
+                <span class="label">Seconds:</span>
+                <div class="binary-bits" id="seconds-bits"></div>
+                <span class="decimal" id="seconds-decimal"></span>
+            </div>
+        </div>
+        
+        <div class="time-display">
+            <h3>Binary Clock Logic Test</h3>
+            <div id="test-results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Binary Clock Logic (copied from BinaryClock.jsx)
+        function getBinaryTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            
+            // Convert to 6-bit binary arrays
+            const hoursBinary = [];
+            const minutesBinary = [];
+            const secondsBinary = [];
+            
+            for (let i = 5; i >= 0; i--) {
+                hoursBinary.push((hours >> i) & 1);
+                minutesBinary.push((minutes >> i) & 1);
+                secondsBinary.push((seconds >> i) & 1);
+            }
+            
+            return {
+                hours,
+                minutes,
+                seconds,
+                hoursBinary,
+                minutesBinary,
+                secondsBinary
+            };
+        }
+        
+        function renderBits(containerId, bits) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            bits.forEach((bit, index) => {
+                const bitElement = document.createElement('div');
+                bitElement.className = `bit ${bit ? 'on' : 'off'}`;
+                bitElement.textContent = bit;
+                bitElement.title = `Bit ${5-index}: ${bit}`;
+                container.appendChild(bitElement);
+            });
+        }
+        
+        function updateDisplay() {
+            const timeData = getBinaryTime();
+            
+            // Update current time
+            document.getElementById('current-time').textContent = 
+                `${timeData.hours.toString().padStart(2, '0')}:${timeData.minutes.toString().padStart(2, '0')}:${timeData.seconds.toString().padStart(2, '0')}`;
+            
+            // Update binary representations
+            renderBits('hours-bits', timeData.hoursBinary);
+            renderBits('minutes-bits', timeData.minutesBinary);
+            renderBits('seconds-bits', timeData.secondsBinary);
+            
+            // Update decimal values
+            document.getElementById('hours-decimal').textContent = `(${timeData.hours})`;
+            document.getElementById('minutes-decimal').textContent = `(${timeData.minutes})`;
+            document.getElementById('seconds-decimal').textContent = `(${timeData.seconds})`;
+            
+            return timeData;
+        }
+        
+        function runTests() {
+            const results = [];
+            
+            // Test 1: Check binary conversion
+            const testTime = getBinaryTime();
+            
+            // Verify binary to decimal conversion
+            const hoursFromBinary = testTime.hoursBinary.reduce((acc, bit, index) => acc + (bit << (5 - index)), 0);
+            const minutesFromBinary = testTime.minutesBinary.reduce((acc, bit, index) => acc + (bit << (5 - index)), 0);
+            const secondsFromBinary = testTime.secondsBinary.reduce((acc, bit, index) => acc + (bit << (5 - index)), 0);
+            
+            results.push({
+                test: 'Binary to Decimal Conversion',
+                passed: hoursFromBinary === testTime.hours && 
+                       minutesFromBinary === testTime.minutes && 
+                       secondsFromBinary === testTime.seconds,
+                details: `H: ${hoursFromBinary}=${testTime.hours}, M: ${minutesFromBinary}=${testTime.minutes}, S: ${secondsFromBinary}=${testTime.seconds}`
+            });
+            
+            // Test 2: Check array lengths
+            results.push({
+                test: 'Binary Array Lengths',
+                passed: testTime.hoursBinary.length === 6 && 
+                       testTime.minutesBinary.length === 6 && 
+                       testTime.secondsBinary.length === 6,
+                details: `Lengths: ${testTime.hoursBinary.length}, ${testTime.minutesBinary.length}, ${testTime.secondsBinary.length}`
+            });
+            
+            // Test 3: Check bit values are 0 or 1
+            const allBits = [...testTime.hoursBinary, ...testTime.minutesBinary, ...testTime.secondsBinary];
+            const validBits = allBits.every(bit => bit === 0 || bit === 1);
+            results.push({
+                test: 'Valid Bit Values',
+                passed: validBits,
+                details: `All bits are 0 or 1: ${validBits}`
+            });
+            
+            // Test 4: Check time bounds
+            results.push({
+                test: 'Time Value Bounds',
+                passed: testTime.hours >= 0 && testTime.hours <= 23 &&
+                       testTime.minutes >= 0 && testTime.minutes <= 59 &&
+                       testTime.seconds >= 0 && testTime.seconds <= 59,
+                details: `H: 0-23 (${testTime.hours}), M: 0-59 (${testTime.minutes}), S: 0-59 (${testTime.seconds})`
+            });
+            
+            // Display results
+            const resultsContainer = document.getElementById('test-results');
+            resultsContainer.innerHTML = '';
+            
+            results.forEach(result => {
+                const resultElement = document.createElement('div');
+                resultElement.className = result.passed ? 'status' : 'error';
+                resultElement.innerHTML = `
+                    <strong>${result.test}:</strong> ${result.passed ? '✅ PASSED' : '❌ FAILED'}<br>
+                    <small>${result.details}</small>
+                `;
+                resultsContainer.appendChild(resultElement);
+            });
+            
+            const allPassed = results.every(r => r.passed);
+            document.getElementById('status').textContent = 
+                `Status: ${allPassed ? '✅ All tests passed!' : '❌ Some tests failed'}`;
+            document.getElementById('status').className = allPassed ? 'status' : 'error';
+        }
+        
+        // Initialize
+        updateDisplay();
+        runTests();
+        
+        // Update every second
+        setInterval(() => {
+            updateDisplay();
+        }, 1000);
+        
+        // Re-run tests every 10 seconds
+        setInterval(runTests, 10000);
+    </script>
+</body>
+</html>

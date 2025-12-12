@@ -1,0 +1,51 @@
+{
+  "nodes": [
+    {
+      "id": "switch-1",
+      "type": "switch",
+      "position": { "x": 100, "y": 100 },
+      "data": { "label": "Input A", "state": false }
+    },
+    {
+      "id": "switch-2",
+      "type": "switch",
+      "position": { "x": 100, "y": 200 },
+      "data": { "label": "Input B", "state": false }
+    },
+    {
+      "id": "and-1",
+      "type": "andGate",
+      "position": { "x": 300, "y": 150 },
+      "data": { "label": "AND Gate" }
+    },
+    {
+      "id": "led-1",
+      "type": "led",
+      "position": { "x": 500, "y": 150 },
+      "data": { "label": "Output", "state": false }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1",
+      "source": "switch-1",
+      "target": "and-1",
+      "sourceHandle": "output",
+      "targetHandle": "input1"
+    },
+    {
+      "id": "edge-2",
+      "source": "switch-2",
+      "target": "and-1",
+      "sourceHandle": "output",
+      "targetHandle": "input2"
+    },
+    {
+      "id": "edge-3",
+      "source": "and-1",
+      "target": "led-1",
+      "sourceHandle": "output",
+      "targetHandle": "input"
+    }
+  ]
+}

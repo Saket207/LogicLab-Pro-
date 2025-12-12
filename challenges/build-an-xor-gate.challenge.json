@@ -1,0 +1,38 @@
+{
+  "name": "Build an XOR Gate",
+  "circuit": {
+    "nodes": [
+      {
+        "id": "switch-1",
+        "type": "switch",
+        "position": { "x": 100, "y": 100 },
+        "data": { "label": "Input A", "state": false }
+      },
+      {
+        "id": "switch-2",
+        "type": "switch",
+        "position": { "x": 100, "y": 200 },
+        "data": { "label": "Input B", "state": false }
+      },
+      {
+        "id": "led-1",
+        "type": "led",
+        "position": { "x": 500, "y": 150 },
+        "data": { "label": "Output", "state": false }
+      }
+    ],
+    "edges": []
+  },
+  "metadata": {
+    "description": "Build an XOR gate using AND, OR, and NOT gates. The output should be HIGH only when exactly one input is HIGH.",
+    "difficulty": "intermediate",
+    "timeLimit": 15,
+    "successCriteria": "The LED should light up only when exactly one of the inputs is on.",
+    "hints": [
+      "Remember that XOR means 'exclusive OR' - it's true when either but not both inputs are true",
+      "You can build an XOR using AND, OR, and NOT gates",
+      "A common pattern is: (A AND (NOT B)) OR ((NOT A) AND B)"
+    ]
+  },
+  "createdAt": "2025-05-25T12:18:00.000Z"
+}

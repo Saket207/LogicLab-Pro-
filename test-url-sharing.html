@@ -1,0 +1,240 @@
+// filepath: c:\Users\Pramod Tiwari\Downloads\logic-gate-simulator\test-url-sharing.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circuit Sharing URL Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #2563eb;
+    }
+    .card {
+      background-color: #f8fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .url-display {
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: monospace;
+      overflow-wrap: break-word;
+      margin: 10px 0;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+    .circuit-info {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    .success {
+      color: #065f46;
+      background-color: #d1fae5;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+      margin-bottom: 15px;
+      width: 100%;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Circuit Sharing URL Test</h1>
+  
+  <div class="card">
+    <h2>Generate Shareable Circuit URL</h2>
+    <p>Select a circuit example and generate a shareable URL that you can use to test the import functionality.</p>
+    
+    <div>
+      <label for="circuit-select">Select a circuit:</label><br>
+      <select id="circuit-select">
+        <option value="basic-and-gate">Basic AND Gate</option>
+        <option value="half-adder">Half Adder</option>
+        <option value="binary-counter">Binary Counter</option>
+      </select>
+    </div>
+    
+    <button id="generate-url">Generate Shareable URL</button>
+    
+    <div id="result" style="display: none;">
+      <h3>Shareable URL</h3>
+      <div class="circuit-info" id="circuit-info"></div>
+      <div class="url-display" id="url-display"></div>
+      <button id="copy-url">Copy URL</button>
+      <button id="open-url">Open in Simulator</button>
+      <div id="copy-success" class="success" style="display: none;">URL copied to clipboard!</div>
+    </div>
+  </div>
+  
+  <script>
+    // Helper function to compress circuit data for URL sharing
+    function compressCircuit(circuit) {
+      const compressedNodes = circuit.nodes.map(node => {
+        const compressedNode = {
+          i: node.id,
+          t: node.type,
+          p: { x: node.position.x, y: node.position.y },
+        };
+        
+        if (node.data) {
+          const compressedData = {};
+          if (node.data.label) compressedData.l = node.data.label;
+          if (node.data.state !== undefined) compressedData.s = node.data.state;
+          
+          // For more complex node types
+          if (node.type === 'switch' || node.type === 'led') {
+            if (Object.keys(compressedData).length > 0) {
+              compressedNode.d = compressedData;
+            }
+          } else {
+            compressedNode.d = node.data;
+          }
+        }
+        
+        return compressedNode;
+      });
+      
+      const compressedEdges = circuit.edges.map(edge => ({
+        i: edge.id,
+        s: edge.source,
+        t: edge.target,
+        st: edge.sourceHandle,
+        tt: edge.targetHandle
+      }));
+      
+      return {
+        n: compressedNodes,
+        e: compressedEdges
+      };
+    }
+
+    // Sample circuit data
+    const circuits = {
+      'basic-and-gate': null,
+      'half-adder': null,
+      'binary-counter': null
+    };
+    
+    // Load circuit data from example files
+    async function loadCircuitData() {
+      try {
+        for (const circuitName in circuits) {
+          const response = await fetch(`examples/${circuitName}.circuit`);
+          circuits[circuitName] = await response.json();
+        }
+        console.log('Circuit examples loaded successfully');
+      } catch (error) {
+        console.error('Failed to load circuit examples:', error);
+      }
+    }
+    
+    // Generate shareable URL
+    function createShareableUrl(circuit) {
+      try {
+        // Compress circuit data
+        const compressedCircuit = compressCircuit(circuit);
+        
+        // Create base64 encoded string
+        const circuitData = btoa(JSON.stringify(compressedCircuit));
+        
+        // Create URL with circuit data as parameter
+        const url = new URL(window.location.href);
+        url.pathname = '/'; // Reset to root path
+        url.searchParams.set('circuit', circuitData);
+        
+        return url.toString();
+      } catch (error) {
+        console.error('Error creating shareable URL:', error);
+        return null;
+      }
+    }
+    
+    // Handle events when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const generateButton = document.getElementById('generate-url');
+      const copyButton = document.getElementById('copy-url');
+      const openButton = document.getElementById('open-url');
+      const circuitSelect = document.getElementById('circuit-select');
+      const resultDiv = document.getElementById('result');
+      const urlDisplay = document.getElementById('url-display');
+      const circuitInfo = document.getElementById('circuit-info');
+      const copySuccess = document.getElementById('copy-success');
+      
+      // Load example circuit data
+      loadCircuitData();
+      
+      // Generate URL when button is clicked
+      generateButton.addEventListener('click', () => {
+        const selectedCircuit = circuitSelect.value;
+        const circuit = circuits[selectedCircuit];
+        
+        if (!circuit) {
+          alert('Circuit data not loaded yet. Please try again in a few moments.');
+          return;
+        }
+        
+        const url = createShareableUrl(circuit);
+        if (url) {
+          urlDisplay.textContent = url;
+          circuitInfo.textContent = `Circuit: ${selectedCircuit} (${circuit.nodes.length} nodes, ${circuit.edges.length} edges)`;
+          resultDiv.style.display = 'block';
+        } else {
+          alert('Failed to create shareable URL');
+        }
+      });
+      
+      // Copy URL to clipboard
+      copyButton.addEventListener('click', () => {
+        const urlText = urlDisplay.textContent;
+        navigator.clipboard.writeText(urlText)
+          .then(() => {
+            copySuccess.style.display = 'block';
+            setTimeout(() => {
+              copySuccess.style.display = 'none';
+            }, 3000);
+          })
+          .catch(err => {
+            console.error('Failed to copy URL:', err);
+            alert('Failed to copy URL to clipboard');
+          });
+      });
+      
+      // Open URL in simulator
+      openButton.addEventListener('click', () => {
+        const urlText = urlDisplay.textContent;
+        window.open(urlText, '_blank');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+// filepath: c:\Users\Pramod Tiwari\Downloads\logic-gate-simulator\test-examples.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Gate Simulator - Example Circuits</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #2563eb;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: #64748b;
+      margin-top: 0;
+      font-weight: normal;
+    }
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .example-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .example-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      background-color: #f8fafc;
+      padding: 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .card-title {
+      margin: 0;
+      color: #1e293b;
+      font-size: 1.25rem;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .example-description {
+      margin-top: 0;
+      color: #64748b;
+    }
+    .example-details {
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+    .detail {
+      display: flex;
+      margin-bottom: 5px;
+    }
+    .detail-label {
+      width: 80px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .example-preview {
+      background-color: #f1f5f9;
+      border-radius: 4px;
+      padding: 15px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .preview-placeholder {
+      color: #94a3b8;
+      font-style: italic;
+    }
+    .example-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .action-button {
+      flex: 1;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .action-button:hover {
+      background-color: #1d4ed8;
+    }
+    .action-button.secondary {
+      background-color: #64748b;
+    }
+    .action-button.secondary:hover {
+      background-color: #475569;
+    }
+    .button-icon {
+      margin-right: 5px;
+    }
+    .circuit-diagram {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Logic Gate Simulator Examples</h1>
+  <p class="subtitle">A collection of example circuits to help you get started</p>
+  
+  <div class="example-grid">
+    <!-- AND Gate Example -->
+    <div class="example-card">
+      <div class="card-header">
+        <h2 class="card-title">Basic AND Gate</h2>
+      </div>
+      <div class="card-body">
+        <p class="example-description">A simple AND gate circuit with two inputs and one output.</p>
+        
+        <div class="example-details">
+          <div class="detail">
+            <div class="detail-label">Components:</div>
+            <div>2 Switches, 1 AND Gate, 1 LED</div>
+          </div>
+          <div class="detail">
+            <div class="detail-label">Difficulty:</div>
+            <div>Beginner</div>
+          </div>
+        </div>
+        
+        <div class="example-preview">
+          <img src="assets/icons/and-gate.svg" alt="AND Gate" width="120" height="60" class="circuit-diagram">
+        </div>
+        
+        <div class="example-actions">
+          <a href="#" class="action-button" onclick="openCircuit('basic-and-gate'); return false;">
+            <span class="button-icon">▶</span> Open Circuit
+          </a>
+          <a href="#" class="action-button secondary" onclick="copyShareLink('basic-and-gate'); return false;">
+            <span class="button-icon">🔗</span> Copy Link
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Half Adder Example -->
+    <div class="example-card">
+      <div class="card-header">
+        <h2 class="card-title">Half Adder</h2>
+      </div>
+      <div class="card-body">
+        <p class="example-description">A half adder circuit that adds two binary digits and produces a sum and carry output.</p>
+        
+        <div class="example-details">
+          <div class="detail">
+            <div class="detail-label">Components:</div>
+            <div>2 Switches, 1 Half Adder, 2 LEDs</div>
+          </div>
+          <div class="detail">
+            <div class="detail-label">Difficulty:</div>
+            <div>Intermediate</div>
+          </div>
+        </div>
+        
+        <div class="example-preview">
+          <div class="preview-placeholder">Half Adder Circuit</div>
+        </div>
+        
+        <div class="example-actions">
+          <a href="#" class="action-button" onclick="openCircuit('half-adder'); return false;">
+            <span class="button-icon">▶</span> Open Circuit
+          </a>
+          <a href="#" class="action-button secondary" onclick="copyShareLink('half-adder'); return false;">
+            <span class="button-icon">🔗</span> Copy Link
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Binary Counter Example -->
+    <div class="example-card">
+      <div class="card-header">
+        <h2 class="card-title">Binary Counter</h2>
+      </div>
+      <div class="card-body">
+        <p class="example-description">A 4-bit binary counter that increments on each clock pulse.</p>
+        
+        <div class="example-details">
+          <div class="detail">
+            <div class="detail-label">Components:</div>
+            <div>1 Clock, 1 Counter, 1 Binary Display</div>
+          </div>
+          <div class="detail">
+            <div class="detail-label">Difficulty:</div>
+            <div>Advanced</div>
+          </div>
+        </div>
+        
+        <div class="example-preview">
+          <div class="preview-placeholder">Binary Counter Circuit</div>
+        </div>
+        
+        <div class="example-actions">
+          <a href="#" class="action-button" onclick="openCircuit('binary-counter'); return false;">
+            <span class="button-icon">▶</span> Open Circuit
+          </a>
+          <a href="#" class="action-button secondary" onclick="copyShareLink('binary-counter'); return false;">
+            <span class="button-icon">🔗</span> Copy Link
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Copy Success Message -->
+  <div id="copy-success" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #065f46;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  ">
+    Link copied to clipboard!
+  </div>
+  
+  <script>
+    // Sample circuit data
+    const circuits = {
+      'basic-and-gate': null,
+      'half-adder': null,
+      'binary-counter': null
+    };
+    
+    // Helper function to compress circuit data for URL sharing
+    function compressCircuit(circuit) {
+      const compressedNodes = circuit.nodes.map(node => {
+        const compressedNode = {
+          i: node.id,
+          t: node.type,
+          p: { x: node.position.x, y: node.position.y },
+        };
+        
+        if (node.data) {
+          const compressedData = {};
+          if (node.data.label) compressedData.l = node.data.label;
+          if (node.data.state !== undefined) compressedData.s = node.data.state;
+          
+          // For more complex node types
+          if (node.type === 'switch' || node.type === 'led') {
+            if (Object.keys(compressedData).length > 0) {
+              compressedNode.d = compressedData;
+            }
+          } else {
+            compressedNode.d = node.data;
+          }
+        }
+        
+        return compressedNode;
+      });
+      
+      const compressedEdges = circuit.edges.map(edge => ({
+        i: edge.id,
+        s: edge.source,
+        t: edge.target,
+        st: edge.sourceHandle,
+        tt: edge.targetHandle
+      }));
+      
+      return {
+        n: compressedNodes,
+        e: compressedEdges
+      };
+    }
+    
+    // Load circuit data from example files
+    async function loadCircuitData() {
+      try {
+        for (const circuitName in circuits) {
+          const response = await fetch(`examples/${circuitName}.circuit`);
+          circuits[circuitName] = await response.json();
+        }
+        console.log('Circuit examples loaded successfully');
+      } catch (error) {
+        console.error('Failed to load circuit examples:', error);
+      }
+    }
+    
+    // Create shareable URL for a circuit
+    function createShareableUrl(circuit) {
+      try {
+        // Compress circuit data
+        const compressedCircuit = compressCircuit(circuit);
+        
+        // Create base64 encoded string
+        const circuitData = btoa(JSON.stringify(compressedCircuit));
+        
+        // Create URL with circuit data as parameter
+        const url = new URL(window.location.href);
+        url.pathname = '/'; // Reset to root path
+        url.searchParams.set('circuit', circuitData);
+        
+        return url.toString();
+      } catch (error) {
+        console.error('Error creating shareable URL:', error);
+        return null;
+      }
+    }
+    
+    // Open a circuit in the simulator
+    function openCircuit(circuitName) {
+      const circuit = circuits[circuitName];
+      if (!circuit) {
+        alert('Circuit data not loaded yet. Please try again in a few moments.');
+        return;
+      }
+      
+      const url = createShareableUrl(circuit);
+      if (url) {
+        window.location.href = url;
+      } else {
+        alert('Failed to create shareable URL for this circuit');
+      }
+    }
+    
+    // Copy share link to clipboard
+    function copyShareLink(circuitName) {
+      const circuit = circuits[circuitName];
+      if (!circuit) {
+        alert('Circuit data not loaded yet. Please try again in a few moments.');
+        return;
+      }
+      
+      const url = createShareableUrl(circuit);
+      if (url) {
+        navigator.clipboard.writeText(url)
+          .then(() => {
+            const copySuccess = document.getElementById('copy-success');
+            copySuccess.style.display = 'block';
+            setTimeout(() => {
+              copySuccess.style.opacity = '1';
+            }, 10);
+            
+            setTimeout(() => {
+              copySuccess.style.opacity = '0';
+              setTimeout(() => {
+                copySuccess.style.display = 'none';
+              }, 300);
+            }, 3000);
+          })
+          .catch(err => {
+            console.error('Failed to copy URL:', err);
+            alert('Failed to copy URL to clipboard');
+          });
+      } else {
+        alert('Failed to create shareable URL for this circuit');
+      }
+    }
+    
+    // Load circuit data when page loads
+    document.addEventListener('DOMContentLoaded', loadCircuitData);
+  </script>
+</body>
+</html>

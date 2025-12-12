@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "switch-1",
+      "type": "switch",
+      "position": { "x": 100, "y": 100 },
+      "data": { "label": "Input A", "state": false }
+    },
+    {
+      "id": "switch-2",
+      "type": "switch",
+      "position": { "x": 100, "y": 200 },
+      "data": { "label": "Input B", "state": false }
+    },
+    {
+      "id": "half-adder-1",
+      "type": "halfAdder",
+      "position": { "x": 300, "y": 150 },
+      "data": { "label": "Half Adder" }
+    },
+    {
+      "id": "led-sum",
+      "type": "led",
+      "position": { "x": 500, "y": 100 },
+      "data": { "label": "Sum", "state": false }
+    },
+    {
+      "id": "led-carry",
+      "type": "led",
+      "position": { "x": 500, "y": 200 },
+      "data": { "label": "Carry", "state": false }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1",
+      "source": "switch-1",
+      "target": "half-adder-1",
+      "sourceHandle": "output",
+      "targetHandle": "input1"
+    },
+    {
+      "id": "edge-2",
+      "source": "switch-2",
+      "target": "half-adder-1",
+      "sourceHandle": "output",
+      "targetHandle": "input2"
+    },
+    {
+      "id": "edge-3",
+      "source": "half-adder-1",
+      "target": "led-sum",
+      "sourceHandle": "sum",
+      "targetHandle": "input"
+    },
+    {
+      "id": "edge-4",
+      "source": "half-adder-1",
+      "target": "led-carry",
+      "sourceHandle": "carry",
+      "targetHandle": "input"
+    }
+  ]
+}

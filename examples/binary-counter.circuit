@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "id": "clock-1",
+      "type": "binaryClock",
+      "position": { "x": 100, "y": 150 },
+      "data": { "label": "Clock", "interval": 1000 }
+    },
+    {
+      "id": "counter-1",
+      "type": "binaryEncoder",
+      "position": { "x": 300, "y": 150 },
+      "data": { "label": "4-bit Counter", "bits": 4 }
+    },
+    {
+      "id": "display-1",
+      "type": "binaryDisplay",
+      "position": { "x": 500, "y": 150 },
+      "data": { "label": "Display", "bits": 4 }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-1",
+      "source": "clock-1",
+      "target": "counter-1",
+      "sourceHandle": "output",
+      "targetHandle": "input1"
+    },
+    {
+      "id": "edge-2",
+      "source": "counter-1",
+      "target": "display-1",
+      "sourceHandle": "output1",
+      "targetHandle": "input1"
+    },
+    {
+      "id": "edge-3",
+      "source": "counter-1",
+      "target": "display-1",
+      "sourceHandle": "output2",
+      "targetHandle": "input2"
+    },
+    {
+      "id": "edge-4",
+      "source": "counter-1",
+      "target": "display-1",
+      "sourceHandle": "output3",
+      "targetHandle": "input3"
+    },
+    {
+      "id": "edge-5",
+      "source": "counter-1",
+      "target": "display-1",
+      "sourceHandle": "output4",
+      "targetHandle": "input4"
+    }
+  ]
+}
