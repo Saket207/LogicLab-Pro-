@@ -1,8 +1,12 @@
 # 🔌 Logic Gate Simulator
 
-An interactive web application for learning digital logic and Boolean algebra through hands-on circuit building.
+An interactive web application for learning digital logic and Boolean algebra through hands-on circuit
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
+<img width="2856" height="1363" alt="Screenshot 2025-12-12 225921" src="https://github.com/user-attachments/assets/09ed89e5-0d1a-48d8-b79b-dcead641f4e8" />
+ building.
+
+
+
 ![React](https://img.shields.io/badge/React-18.2.0-blue.svg)
 ![Vite](https://img.shields.io/badge/Vite-4.4.5-purple.svg)
 
@@ -51,6 +55,10 @@ npm install
 # Start development server
 npm run dev
 ```
+STEPS ARE
+cd logic-gate-simulator
+npm install
+npm run dev
 
 ### Production Build
 ```bash
@@ -166,9 +174,7 @@ We welcome contributions! Here's how to get started:
 - Test new features thoroughly
 - Update documentation as needed
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
