@@ -143,7 +143,14 @@ src/
 - `src/components/TeacherDashboard.jsx` - Educational tools
 - `src/components/RealWorldPopup.jsx` - Real-world examples
 
-## 📚 Educational Standards Alignment
+- VIDEO PREVIEW
+- 
+
+
+
+https://github.com/user-attachments/assets/d4896771-1280-4e55-86d0-43aaa59a54a0
+
+Educational Standards Alignment
 
 ### STEM Concepts Covered
 - **🔬 Science**: Understanding electrical circuits and digital systems
